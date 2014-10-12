@@ -19,18 +19,11 @@ class TwitterAPI {
     return curl_exec($curl);
   }
 
-  private function connect($method, $url, $setting)
+  public function request($method, $url, $setting)
   {
     $oAuthRequest = new OAuthRequest($method, $url, $setting);
     $header = $oAuthRequest->buildRequestHeader();
     $request_url = $oAuthRequest->buildRequestURL();
     return $this->curl($method, $request_url, $header);
   }
-
-  public function getUserTweets($setting)
-  {
-    $url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
-    return $this->connect('GET', $url, $setting);
-  }
 }
-

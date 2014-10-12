@@ -34,13 +34,13 @@ class OAuthRequest {
   {
     $this->parameter = array_merge($this->parameter, $this->buildOAuthSetting());
     ksort($this->parameter);
-    $base_string = implode('&', array(
+    $data = implode('&', array(
       OAuthUtil::urlencodeRFC3986($this->method),
       OAuthUtil::urlencodeRFC3986($this->url),
       OAuthUtil::urlencodeRFC3986(http_build_query($this->parameter, '', '&'))
     ));
-    $signature_key = implode('&', array(CONSUMER_SECRET, ACCESS_TOKEN_SECRET));
-    $hash = hash_hmac('sha1', $base_string, $signature_key, true);
+    $key = implode('&', array(CONSUMER_SECRET, ACCESS_TOKEN_SECRET));
+    $hash = hash_hmac('sha1', $data, $key, true);
     return base64_encode($hash);
   }
 
